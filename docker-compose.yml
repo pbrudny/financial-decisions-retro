@@ -1,11 +1,24 @@
 services:
   app:
     build: .
-    ports:
-      - "3000:3000"
     volumes:
       - data:/data
     restart: unless-stopped
 
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      - DOMAIN=${DOMAIN:-localhost}
+    restart: unless-stopped
+
 volumes:
   data:
+  caddy_data:
+  caddy_config:
