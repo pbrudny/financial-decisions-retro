@@ -1,63 +1,63 @@
-# Retrospektywa Decyzji Finansowych
+# Financial Decisions Retrospective
 
-Aplikacja do wspólnej retrospektywy decyzji finansowych w parze (osoba A i B). Każda osoba niezależnie ocenia przeszłe decyzje — ocena partnera jest ukryta do momentu zablokowania obu ocen.
+An app for couples (person A and B) to jointly review past financial decisions. Each person independently assesses decisions — the partner's answers are hidden until both assessments are locked.
 
-## Stos technologiczny
+## Tech Stack
 
 - **Frontend**: React + Vite + TypeScript + Tailwind CSS v4 + TanStack Query
 - **Backend**: Express + TypeScript + better-sqlite3
-- **Shared**: Zod schemas + typy TypeScript (npm workspaces monorepo)
+- **Shared**: Zod schemas + TypeScript types (npm workspaces monorepo)
 
-## Uruchomienie
+## Getting Started
 
 ```bash
 npm install
 npm run build:shared
-npm run dev              # serwer (3001) + klient (5173)
+npm run dev              # server (3001) + client (5173)
 ```
 
-Lub osobno:
+Or separately:
 
 ```bash
-npm run dev:server       # Express na http://localhost:3001
-npm run dev:client       # Vite na http://localhost:5173
+npm run dev:server       # Express at http://localhost:3001
+npm run dev:client       # Vite at http://localhost:5173
 ```
 
-## Testowanie
+## Testing
 
-Otwórz dwie przeglądarki (lub jedną incognito) i zaloguj się jako osoba A i B.
+Open two browsers (or one incognito) and log in as person A and B.
 
 ## Flow
 
-1. **Propozycja** — jedna osoba dodaje decyzję do retrospektywy
-2. **Akceptacja** — druga osoba potwierdza, że decyzja miała miejsce
-3. **Ocena** — każda osoba niezależnie wypełnia: rating 1-5, argumenty za/przeciw, największe zignorowane ryzyko, odpowiedzialność
-4. **Blokada** — po wypełnieniu osoba blokuje swoją ocenę (nieodwracalne)
-5. **Oczekiwanie** — polling co 3s, auto-redirect gdy obie zablokowane
-6. **Porównanie** — split view z highlight różnic (zielony/żółty/czerwony)
-7. **Wspólny wniosek** — para wspólnie formułuje wnioski
-8. **Meta-wnioski** — biasy poznawcze, zasady, red flagi
+1. **Proposal** — one person adds a decision to the retrospective
+2. **Approval** — the other person confirms the decision actually took place
+3. **Assessment** — each person independently fills in: rating 1-5, pros/cons, biggest ignored risk, responsibility
+4. **Lock** — once complete, the person locks their assessment (irreversible)
+5. **Waiting** — polls every 3s, auto-redirects when both are locked
+6. **Comparison** — split view with difference highlighting (green/yellow/red)
+7. **Shared conclusion** — the pair formulates conclusions together
+8. **Meta-conclusions** — cognitive biases, rules, red flags
 
-## Mechanizm "Reveal"
+## Reveal Mechanism
 
-Endpoint `/compare` zwraca ocenę partnera **tylko** gdy obie oceny mają status `locked`. Brak endpointu unlock. Brak ścieżki wycieku danych przed zablokowaniem.
+The `/compare` endpoint returns the partner's assessment **only** when both assessments have status `locked`. There is no unlock endpoint. No data leakage path before locking.
 
-## Struktura
+## Project Structure
 
 ```
-├── shared/          # Typy, schematy Zod, stałe
+├── shared/          # Types, Zod schemas, constants
 ├── server/          # Express API + SQLite
 │   └── src/
-│       ├── db/          # Połączenie + migracja
+│       ├── db/          # Connection + migration
 │       ├── middleware/   # Auth (X-User-Id), error handler
-│       ├── repositories/ # Zapytania SQL
-│       ├── services/     # Logika biznesowa (reveal guard, lock)
-│       └── routes/       # Endpointy API
+│       ├── repositories/ # SQL queries
+│       ├── services/     # Business logic (reveal guard, lock)
+│       └── routes/       # API endpoints
 └── client/          # React + Vite
     └── src/
-        ├── api/         # Fetch wrapper + endpointy
+        ├── api/         # Fetch wrapper + endpoints
         ├── context/     # AuthContext (A|B)
         ├── components/  # AppShell, AuthGuard, ErrorBoundary
-        ├── pages/       # 9 stron
-        └── lib/         # Polskie labele, utilities
+        ├── pages/       # 9 pages
+        └── lib/         # Polish labels, utilities
 ```
