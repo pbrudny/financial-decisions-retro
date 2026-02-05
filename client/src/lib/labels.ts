@@ -21,6 +21,11 @@ export const RATING_LABELS: Record<number, string> = {
   5: 'Bardzo dobra',
 };
 
+export const USER_LABELS: Record<string, string> = {
+  A: 'On',
+  B: 'Ona',
+};
+
 export const DECISION_STATUS_LABELS: Record<string, string> = {
   proposal: 'Propozycja',
   approved: 'Zatwierdzona',

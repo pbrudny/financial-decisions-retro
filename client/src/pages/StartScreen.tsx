@@ -2,6 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { getGlobalStatus } from '../api/endpoints';
 import type { UserId } from 'shared';
+import { USER_LABELS } from '../lib/labels';
 
 export function StartScreen() {
   const { login } = useAuth();
@@ -24,9 +25,9 @@ export function StartScreen() {
               className="flex flex-col items-center gap-2 p-6 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all"
             >
               <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-lg">
-                {id}
+                {USER_LABELS[id]}
               </div>
-              <span className="text-sm font-medium text-gray-700">Osoba {id}</span>
+              <span className="text-sm font-medium text-gray-700">{USER_LABELS[id]}</span>
             </button>
           ))}
         </div>
