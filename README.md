@@ -1,3 +1,5 @@
+[![Deploy](https://github.com/pbrudny/financial-decisions-retro/actions/workflows/deploy.yml/badge.svg)](https://github.com/pbrudny/financial-decisions-retro/actions/workflows/deploy.yml)
+
 # Financial Decisions Retrospective
 
 An app for couples (person A and B) to jointly review past financial decisions. Each person independently assesses decisions — the partner's answers are hidden until both assessments are locked.
