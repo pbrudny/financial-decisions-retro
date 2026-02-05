@@ -25,7 +25,7 @@ export function DashboardPage() {
         <StatCard label="Wszystkie decyzje" value={data.total_decisions} />
         <StatCard label="Zatwierdzone" value={data.approved_decisions} />
         <StatCard label="Ocenione" value={data.rating_diffs.length} />
-        <StatCard label="Meta-wnioski" value={data.meta_counts.reduce((s: number, c: any) => s + c.count, 0)} />
+        <StatCard label="Meta-wnioski" value={data.meta_counts.reduce((s, c) => s + c.count, 0)} />
       </div>
 
       {/* Rating distribution */}
@@ -34,8 +34,8 @@ export function DashboardPage() {
           <h2 className="text-base font-semibold text-gray-800 mb-4">Rozkład ocen</h2>
           <div className="flex items-end gap-3 h-32">
             {[1, 2, 3, 4, 5].map(r => {
-              const count = data.ratings.find((x: any) => x.rating === r)?.count ?? 0;
-              const max = Math.max(...data.ratings.map((x: any) => x.count), 1);
+              const count = data.ratings.find(x => x.rating === r)?.count ?? 0;
+              const max = Math.max(...data.ratings.map(x => x.count), 1);
               const height = max > 0 ? (count / max) * 100 : 0;
               return (
                 <div key={r} className="flex-1 flex flex-col items-center gap-1">
@@ -57,7 +57,7 @@ export function DashboardPage() {
         <div className="bg-white rounded-lg border border-gray-200 p-5 mb-6">
           <h2 className="text-base font-semibold text-gray-800 mb-4">Porównanie ocen</h2>
           <div className="space-y-2">
-            {data.rating_diffs.map((d: any, i: number) => (
+            {data.rating_diffs.map((d, i) => (
               <div key={i} className="flex items-center gap-3 text-sm">
                 <span className="flex-1 text-gray-700 truncate">{d.name}</span>
                 <span className="text-gray-500">A: {d.rating_a}</span>
@@ -74,7 +74,7 @@ export function DashboardPage() {
         <div className="bg-white rounded-lg border border-gray-200 p-5">
           <h2 className="text-base font-semibold text-gray-800 mb-4">Czy podjąłbyś ponownie?</h2>
           <div className="flex gap-4">
-            {data.would_do_again.map((w: any) => (
+            {data.would_do_again.map((w) => (
               <div key={w.would_do_again} className="flex-1 bg-gray-50 rounded-lg p-4 text-center">
                 <div className="text-2xl font-bold text-gray-900">{w.count}</div>
                 <div className="text-sm text-gray-500">{w.would_do_again ? 'Tak' : 'Nie'}</div>

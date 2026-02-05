@@ -72,4 +72,13 @@ export const deleteMetaConclusion = (id: number) =>
 
 // Status
 export const getGlobalStatus = () => apiFetch<GlobalStatus>('/status');
-export const getDashboardStats = () => apiFetch<any>('/status/dashboard');
+
+interface DashboardStats {
+  total_decisions: number;
+  approved_decisions: number;
+  ratings: { rating: number; count: number }[];
+  would_do_again: { would_do_again: number; count: number }[];
+  rating_diffs: { name: string; diff: number; rating_a: number; rating_b: number }[];
+  meta_counts: { type: string; count: number }[];
+}
+export const getDashboardStats = () => apiFetch<DashboardStats>('/status/dashboard');

@@ -48,7 +48,7 @@ export const decisionsRepo = {
         SUM(CASE WHEN status = 'approved' THEN 1 ELSE 0 END) as approved,
         SUM(CASE WHEN status = 'closed' THEN 1 ELSE 0 END) as closed
       FROM decisions
-    `).get() as any;
+    `).get() as { total: number; approved: number; closed: number };
     return { total: rows.total ?? 0, approved: rows.approved ?? 0, closed: rows.closed ?? 0 };
   },
 };

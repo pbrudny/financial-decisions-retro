@@ -13,6 +13,7 @@ let testDb: Database.Database;
 vi.mock('../db/connection.js', () => ({
   default: new Proxy({} as Database.Database, {
     get(_target, prop) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (testDb as any)[prop];
     },
   }),

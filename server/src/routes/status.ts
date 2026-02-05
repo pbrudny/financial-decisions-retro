@@ -54,7 +54,7 @@ router.get('/dashboard', asyncHandler(async (req, res) => {
     FROM decisions d
     JOIN assessments a1 ON a1.decision_id = d.id AND a1.user_id = 'A' AND a1.status = 'locked'
     JOIN assessments a2 ON a2.decision_id = d.id AND a2.user_id = 'B' AND a2.status = 'locked'
-  `).all() as any[];
+  `).all() as { name: string; rating_a: number; rating_b: number; wda_a: number; wda_b: number }[];
 
   const ratingDiffs = comparedDecisions.map(d => ({
     name: d.name,

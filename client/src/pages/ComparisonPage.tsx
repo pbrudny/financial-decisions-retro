@@ -11,7 +11,7 @@ import {
 } from '../api/endpoints';
 import { cn } from '../lib/cn';
 import { RATING_LABELS, BURDEN_LABELS } from '../lib/labels';
-import type { AssessmentWithItems, ResponsibilityComparison, BurdenOption } from 'shared';
+import type { ResponsibilityComparison, BurdenOption } from 'shared';
 
 export function ComparisonPage() {
   const { id } = useParams<{ id: string }>();

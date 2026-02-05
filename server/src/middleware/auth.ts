@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { userIdSchema, type UserId } from 'shared';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       userId: UserId;

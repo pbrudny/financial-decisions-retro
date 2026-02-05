@@ -88,10 +88,6 @@ function DecisionCard({ decision }: { decision: Decision }) {
   const myApproval = userId === 'A' ? decision.approved_by_a : decision.approved_by_b;
   const canApprove = isProposal && !myApproval;
 
-  const linkTo = decision.status === 'proposal'
-    ? `/decisions/${decision.id}`
-    : `/decisions/${decision.id}/assess`;
-
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-gray-300 transition-colors">
       <div className="flex justify-between items-start">

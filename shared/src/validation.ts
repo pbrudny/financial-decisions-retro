@@ -1,11 +1,9 @@
 import { z } from 'zod';
 import {
   USERS,
-  DECISION_STATUS,
   ASSESSMENT_ITEM_TYPE,
   BURDEN_OPTIONS,
   META_CONCLUSION_TYPES,
-  RATINGS,
 } from './constants.js';
 
 export const userIdSchema = z.enum(USERS);

@@ -49,6 +49,7 @@ describe('createDecisionSchema', () => {
   });
 
   it('rejects missing period', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { period, ...rest } = valid;
     expect(() => createDecisionSchema.parse(rest)).toThrow();
   });

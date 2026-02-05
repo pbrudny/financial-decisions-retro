@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { getGlobalStatus } from '../api/endpoints';
@@ -47,17 +48,24 @@ function PartnerStatus() {
     refetchInterval: 5000,
   });
 
-  if (!data?.partner_last_seen) return null;
+  const [statusText, setStatusText] = useState<string | null>(null);
 
-  const lastSeen = new Date(data.partner_last_seen);
-  const diffMs = Date.now() - lastSeen.getTime();
-  const diffMin = Math.floor(diffMs / 60000);
+  /* eslint-disable react-hooks/set-state-in-effect */
+  useEffect(() => {
+    if (!data?.partner_last_seen) {
+      setStatusText(null);
+      return;
+    }
+    const lastSeen = new Date(data.partner_last_seen);
+    const diffMs = Date.now() - lastSeen.getTime();
+    const diffMin = Math.floor(diffMs / 60000);
+    if (diffMin < 1) setStatusText('Aktywna teraz');
+    else if (diffMin < 60) setStatusText(`Aktywna ${diffMin} min temu`);
+    else setStatusText('Nieaktywna');
+  }, [data?.partner_last_seen]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
-  const statusText = diffMin < 1
-    ? 'Aktywna teraz'
-    : diffMin < 60
-      ? `Aktywna ${diffMin} min temu`
-      : 'Nieaktywna';
+  if (!statusText) return null;
 
   return (
     <p className="text-center text-sm text-gray-400 mt-6">

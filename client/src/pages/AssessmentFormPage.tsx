@@ -60,6 +60,7 @@ export function AssessmentFormPage() {
   const isLocked = assessment?.status === 'locked';
 
   // Initialize from server data
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (initializedRef.current || loadingAssessment) return;
     if (assessment) {
@@ -82,6 +83,7 @@ export function AssessmentFormPage() {
       setMainBurden(responsibility.main_burden as BurdenOption | null);
     }
   }, [responsibility, loadingResp]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Build input for save
   const buildAssessmentInput = useCallback((): UpdateAssessmentInput => {
@@ -93,7 +95,7 @@ export function AssessmentFormPage() {
       if (text.trim()) items.push({ type: 'con', text: text.trim(), sort_order: i });
     });
     return {
-      rating: rating as any,
+      rating,
       would_do_again: wouldDoAgain,
       biggest_ignored_risk: biggestRisk || null,
       items,
@@ -133,7 +135,7 @@ export function AssessmentFormPage() {
     if (!initializedRef.current || isLocked || loadingAssessment) return;
     scheduleSave();
     return () => { if (saveTimerRef.current) clearTimeout(saveTimerRef.current); };
-  }, [rating, wouldDoAgain, biggestRisk, pros, cons, broughtTopic, pushedExecution, mainBurden]);
+  }, [rating, wouldDoAgain, biggestRisk, pros, cons, broughtTopic, pushedExecution, mainBurden, isLocked, loadingAssessment, scheduleSave]);
 
   // Lock mutation
   const lockMutation = useMutation({
